@@ -1,5 +1,6 @@
 package com.foodie.FoodSetGo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,4 +18,8 @@ Food {
     private Double price;
     @Column(nullable = false)
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    @JsonIgnore
+    private Restaurant restaurant;
 }

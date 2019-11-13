@@ -2,7 +2,9 @@ package com.foodie.FoodSetGo.service.impl;
 
 import com.foodie.FoodSetGo.dto.UpdateFoodRequest;
 import com.foodie.FoodSetGo.model.Food;
+import com.foodie.FoodSetGo.model.Restaurant;
 import com.foodie.FoodSetGo.repository.FoodRepository;
+import com.foodie.FoodSetGo.repository.RestaurantRepository;
 import com.foodie.FoodSetGo.service.FoodService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class FoodServiceImpl implements FoodService {
     @Autowired
     FoodRepository foodRepository;
+    @Autowired
+    RestaurantRepository restaurantRepository;
     @Override
     public List<Food> getAll() {
         return foodRepository.findAll();
@@ -50,6 +54,25 @@ public class FoodServiceImpl implements FoodService {
         food.setName(updateFoodRequest.getName());
         food.setPrice(updateFoodRequest.getPrice());
         food.setDescription(updateFoodRequest.getDescription());
+        return foodRepository.save(food);
+    }
+
+    @Override
+    public void deleteFood(Integer restaurant_id, Integer food_id) {
+        Food food = foodRepository.findById(food_id).get();
+        if(food.getRestaurant().getId().equals(restaurant_id)) {
+            foodRepository.deleteById(food_id);
+        }
+    }
+
+    @Override
+    public Food saveFood(Integer restaurant_id, UpdateFoodRequest updateFoodRequest) {
+        Restaurant restaurant = restaurantRepository.findById(restaurant_id).get();
+        Food food = new Food();
+        food.setName(updateFoodRequest.getName());
+        food.setPrice(updateFoodRequest.getPrice());
+        food.setDescription(updateFoodRequest.getDescription());
+        food.setRestaurant(restaurant);
         return foodRepository.save(food);
     }
 }

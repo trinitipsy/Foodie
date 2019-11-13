@@ -37,4 +37,13 @@ public class FoodController {
     public void delete(Integer id) {
         foodService.delete(id);
     }
+
+    @PostMapping("/restaurant")
+    public ResponseEntity<Food> saveFood(@RequestParam Integer restaurant_id, @RequestBody UpdateFoodRequest updateFoodRequest) {
+        return ResponseEntity.ok(foodService.saveFood(restaurant_id, updateFoodRequest));
+    }
+    @DeleteMapping("/restaurant")
+    public void deleteFood(@RequestParam Integer restaurant_id, @RequestParam Integer food_id) {
+        foodService.deleteFood(restaurant_id, food_id);
+    }
 }

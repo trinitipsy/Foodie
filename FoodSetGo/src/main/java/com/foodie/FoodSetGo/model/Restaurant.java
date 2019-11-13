@@ -3,6 +3,7 @@ package com.foodie.FoodSetGo.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,4 +19,6 @@ public class Restaurant {
     private String address;
     @Column(nullable = false)
     private String description;
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    private List<Food> menu;
 }

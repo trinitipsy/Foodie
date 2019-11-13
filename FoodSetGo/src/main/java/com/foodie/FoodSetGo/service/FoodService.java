@@ -11,4 +11,6 @@ public interface FoodService {
     void delete(Integer id);
     Food update(Integer id, UpdateFoodRequest updateFoodRequest);
     Food save(UpdateFoodRequest updateFoodRequest);
+    void deleteFood(Integer restaurant_id, Integer food_id);
+    Food saveFood(Integer restaurant_id, UpdateFoodRequest updateFoodRequest);
 }
