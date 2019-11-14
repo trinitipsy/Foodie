@@ -1,8 +1,6 @@
 package com.foodie.FoodSetGo.service;
 
-import com.foodie.FoodSetGo.dto.UpdateFoodRequest;
 import com.foodie.FoodSetGo.dto.UpdateRestaurantRequest;
-import com.foodie.FoodSetGo.model.Food;
 import com.foodie.FoodSetGo.model.Restaurant;
 
 import java.util.List;
