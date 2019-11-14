@@ -3,13 +3,8 @@ package com.foodie.FoodSetGo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,4 +23,7 @@ Food {
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
+    @ManyToMany(mappedBy = "food")
+    @JsonIgnore
+    private List<Order> order;
 }
