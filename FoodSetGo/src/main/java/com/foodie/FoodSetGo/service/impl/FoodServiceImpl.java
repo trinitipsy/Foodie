@@ -32,13 +32,8 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void delete(Integer id) {
-        foodRepository.deleteById(id);
-    }
-
-    @Override
-    public Food update(Integer id, UpdateFoodRequest updateFoodRequest) {
-        Optional<Food> foodForUpdate = foodRepository.findById(id);
+    public Food update(Integer food_id, UpdateFoodRequest updateFoodRequest) {
+        Optional<Food> foodForUpdate = foodRepository.findById(food_id);
         if(!foodForUpdate.isPresent()) {
             throw new EntityNotFoundException();
         }
@@ -49,16 +44,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Food save(UpdateFoodRequest updateFoodRequest) {
-        Food food = new Food();
-        food.setName(updateFoodRequest.getName());
-        food.setPrice(updateFoodRequest.getPrice());
-        food.setDescription(updateFoodRequest.getDescription());
-        return foodRepository.save(food);
-    }
-
-    @Override
-    public void deleteFood(Integer restaurant_id, Integer food_id) {
+    public void delete(Integer restaurant_id, Integer food_id) {
         Food food = foodRepository.findById(food_id).get();
         if(food.getRestaurant().getId().equals(restaurant_id)) {
             foodRepository.deleteById(food_id);
@@ -66,8 +52,8 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Food saveFood(Integer restaurant_id, UpdateFoodRequest updateFoodRequest) {
-        Restaurant restaurant = restaurantRepository.findById(restaurant_id).get();
+    public Food save(UpdateFoodRequest updateFoodRequest) {
+        Restaurant restaurant = restaurantRepository.findById(updateFoodRequest.getRestaurant_id()).get();
         Food food = new Food();
         food.setName(updateFoodRequest.getName());
         food.setPrice(updateFoodRequest.getPrice());

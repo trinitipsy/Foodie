@@ -25,25 +25,17 @@ public class FoodController {
     public ResponseEntity<Food> get(@RequestParam Integer id) {
         return ResponseEntity.ok(foodService.get(id));
     }
-    @PostMapping
-    public ResponseEntity<Food> save(@RequestBody UpdateFoodRequest updateFoodRequest) {
-        return ResponseEntity.ok(foodService.save(updateFoodRequest));
-    }
+
     @PutMapping
     public ResponseEntity<Food> update(@RequestParam Integer id, @RequestBody UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.update(id, updateFoodRequest));
     }
+    @PostMapping
+    public ResponseEntity<Food> save(@RequestBody UpdateFoodRequest updateFoodRequest) {
+        return ResponseEntity.ok(foodService.save(updateFoodRequest));
+    }
     @DeleteMapping
-    public void delete(Integer id) {
-        foodService.delete(id);
-    }
-
-    @PostMapping("/restaurant")
-    public ResponseEntity<Food> saveFood(@RequestParam Integer restaurant_id, @RequestBody UpdateFoodRequest updateFoodRequest) {
-        return ResponseEntity.ok(foodService.saveFood(restaurant_id, updateFoodRequest));
-    }
-    @DeleteMapping("/restaurant")
-    public void deleteFood(@RequestParam Integer restaurant_id, @RequestParam Integer food_id) {
-        foodService.deleteFood(restaurant_id, food_id);
+    public void delete(@RequestParam Integer restaurant_id, @RequestParam Integer food_id) {
+        foodService.delete(restaurant_id, food_id);
     }
 }
