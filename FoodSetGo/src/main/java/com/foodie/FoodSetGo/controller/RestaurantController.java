@@ -19,6 +19,7 @@ public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<List<GetRestaurantsRequest>> getAll() {
         List<GetRestaurantsRequest> list = restaurantService.getAll();
@@ -27,6 +28,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Restaurant> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(restaurantService.get(id));
     }

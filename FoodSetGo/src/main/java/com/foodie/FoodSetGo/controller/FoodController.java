@@ -18,10 +18,13 @@ public class FoodController {
     FoodService foodService;
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Food>> getAll() {
         return ResponseEntity.ok(foodService.getAll());
     }
+
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Food> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(foodService.get(id));
     }
