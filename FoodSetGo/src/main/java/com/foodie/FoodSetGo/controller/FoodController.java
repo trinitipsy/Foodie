@@ -34,8 +34,8 @@ public class FoodController {
     public ResponseEntity<Food> save(@RequestBody UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.save(updateFoodRequest));
     }
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Integer restaurant_id, @RequestParam Integer food_id) {
+    @DeleteMapping("/{restaurant_id}/{food_id}")
+    public void delete(@PathVariable("restaurant_id") Integer restaurant_id, @PathVariable("food_id") Integer food_id) {
         foodService.delete(restaurant_id, food_id);
     }
 }

@@ -20,7 +20,6 @@ public class Restaurant {
     private String address;
     @Column(nullable = false)
     private String description;
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "restaurant")
     private List<Food> menu;
 }

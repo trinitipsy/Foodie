@@ -23,7 +23,7 @@ Food {
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
-    @ManyToMany(mappedBy = "food")
+    @ManyToMany(mappedBy = "food", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Order> order;
 }

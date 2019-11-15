@@ -1,5 +1,6 @@
 package com.foodie.FoodSetGo.service.impl;
 
+import com.foodie.FoodSetGo.dto.GetRestaurantsRequest;
 import com.foodie.FoodSetGo.dto.UpdateRestaurantRequest;
 import com.foodie.FoodSetGo.model.Restaurant;
 import com.foodie.FoodSetGo.repository.RestaurantRepository;
@@ -18,19 +19,19 @@ public class RestaurantServiceImpl implements RestaurantService {
     RestaurantRepository restaurantRepository;
 
     @Override
-    public List<UpdateRestaurantRequest> getAll() {
+    public List<GetRestaurantsRequest> getAll() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
-        List<UpdateRestaurantRequest> updateRestaurantRequest = new ArrayList<>();
+        List<GetRestaurantsRequest> getRestaurantsRequests = new ArrayList<>();
         for (Restaurant r: restaurants
              ) {
-            UpdateRestaurantRequest req = new UpdateRestaurantRequest();
+            GetRestaurantsRequest req = new GetRestaurantsRequest();
             req.setName(r.getName());
             req.setAddress(r.getAddress());
             req.setEmail(r.getAddress());
             req.setDescription(r.getDescription());
-            updateRestaurantRequest.add(req);
+            getRestaurantsRequests.add(req);
         }
-        return updateRestaurantRequest;
+        return getRestaurantsRequests;
     }
 
     @Override

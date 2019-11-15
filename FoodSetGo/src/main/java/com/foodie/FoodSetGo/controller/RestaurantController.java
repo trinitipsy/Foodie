@@ -1,5 +1,6 @@
 package com.foodie.FoodSetGo.controller;
 
+import com.foodie.FoodSetGo.dto.GetRestaurantsRequest;
 import com.foodie.FoodSetGo.dto.UpdateRestaurantRequest;
 import com.foodie.FoodSetGo.model.Restaurant;
 import com.foodie.FoodSetGo.service.RestaurantService;
@@ -19,8 +20,8 @@ public class RestaurantController {
     RestaurantService restaurantService;
 
     @GetMapping
-    public ResponseEntity<List<UpdateRestaurantRequest>> getAll() {
-        List<UpdateRestaurantRequest> list = restaurantService.getAll();
+    public ResponseEntity<List<GetRestaurantsRequest>> getAll() {
+        List<GetRestaurantsRequest> list = restaurantService.getAll();
 
         return ResponseEntity.ok(list);
     }
