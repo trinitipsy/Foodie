@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserService userService;
@@ -21,16 +21,16 @@ public class UserController {
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.getAll());
     }
-    @GetMapping("/one")
-    public ResponseEntity<User> get(Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<User> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(userService.get(id));
     }
-    @PutMapping("/put")
-    public ResponseEntity<User> update(@RequestParam Integer id, @RequestBody UpdateUserRequest user) {
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable("id") Integer id, @RequestBody UpdateUserRequest user) {
         return  ResponseEntity.ok(userService.update(id, user));
     }
-    @DeleteMapping
-    public void delete(@RequestParam Integer id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Integer id) {
         userService.delete(id);
     }
     @PostMapping

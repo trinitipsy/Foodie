@@ -35,13 +35,13 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantService.save(updateRestaurantRequest));
     }
 
-    @PutMapping
-    public ResponseEntity<Restaurant> update(@RequestParam Integer id, @RequestBody UpdateRestaurantRequest updateRestaurantRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurant> update(@PathVariable("id") Integer id, @RequestBody UpdateRestaurantRequest updateRestaurantRequest) {
         return ResponseEntity.ok(restaurantService.update(id, updateRestaurantRequest));
     }
 
-    @DeleteMapping
-    public void delete(Integer id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Integer id) {
         restaurantService.delete(id);
     }
 }

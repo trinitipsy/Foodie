@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @RestController
-@RequestMapping("/food")
+@RequestMapping("/foods")
 public class FoodController {
     @Autowired
     FoodService foodService;
@@ -21,21 +21,21 @@ public class FoodController {
     public ResponseEntity<List<Food>> getAll() {
         return ResponseEntity.ok(foodService.getAll());
     }
-    @GetMapping("/one")
-    public ResponseEntity<Food> get(@RequestParam Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Food> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(foodService.get(id));
     }
 
-    @PutMapping
-    public ResponseEntity<Food> update(@RequestParam Integer id, @RequestBody UpdateFoodRequest updateFoodRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Food> update(@PathVariable("id") Integer id, @RequestBody UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.update(id, updateFoodRequest));
     }
     @PostMapping
     public ResponseEntity<Food> save(@RequestBody UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.save(updateFoodRequest));
     }
-    @DeleteMapping
-    public void delete(@RequestParam Integer restaurant_id, @RequestParam Integer food_id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Integer restaurant_id, @RequestParam Integer food_id) {
         foodService.delete(restaurant_id, food_id);
     }
 }
