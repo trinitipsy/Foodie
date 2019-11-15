@@ -8,22 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Data
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("/restaurants")
 public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
 
     @GetMapping
-    public ResponseEntity<List<Restaurant>> getAll() {
-        return ResponseEntity.ok(restaurantService.getAll());
+    public ResponseEntity<List<UpdateRestaurantRequest>> getAll() {
+        List<UpdateRestaurantRequest> list = restaurantService.getAll();
+
+        return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/one")
-    public ResponseEntity<Restaurant> get(Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Restaurant> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(restaurantService.get(id));
     }
 

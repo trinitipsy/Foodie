@@ -1,5 +1,6 @@
 package com.foodie.FoodSetGo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,5 +21,6 @@ public class Restaurant {
     @Column(nullable = false)
     private String description;
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Food> menu;
 }

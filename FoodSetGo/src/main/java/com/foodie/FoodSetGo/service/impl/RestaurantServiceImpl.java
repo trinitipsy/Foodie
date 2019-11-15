@@ -8,6 +8,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,8 +18,19 @@ public class RestaurantServiceImpl implements RestaurantService {
     RestaurantRepository restaurantRepository;
 
     @Override
-    public List<Restaurant> getAll() {
-        return restaurantRepository.findAll();
+    public List<UpdateRestaurantRequest> getAll() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<UpdateRestaurantRequest> updateRestaurantRequest = new ArrayList<>();
+        for (Restaurant r: restaurants
+             ) {
+            UpdateRestaurantRequest req = new UpdateRestaurantRequest();
+            req.setName(r.getName());
+            req.setAddress(r.getAddress());
+            req.setEmail(r.getAddress());
+            req.setDescription(r.getDescription());
+            updateRestaurantRequest.add(req);
+        }
+        return updateRestaurantRequest;
     }
 
     @Override

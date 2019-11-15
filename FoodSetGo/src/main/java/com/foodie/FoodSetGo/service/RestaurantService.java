@@ -6,7 +6,7 @@ import com.foodie.FoodSetGo.model.Restaurant;
 import java.util.List;
 
 public interface RestaurantService {
-    List<Restaurant> getAll();
+    List<UpdateRestaurantRequest> getAll();
     Restaurant get(Integer id);
     void delete(Integer id);
     Restaurant update(Integer id, UpdateRestaurantRequest updateRestaurantRequest);
