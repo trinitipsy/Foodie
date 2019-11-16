@@ -25,6 +25,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         for (Restaurant r: restaurants
              ) {
             GetRestaurantsRequest req = new GetRestaurantsRequest();
+            req.setId(r.getId());
             req.setName(r.getName());
             req.setAddress(r.getAddress());
             req.setEmail(r.getAddress());
