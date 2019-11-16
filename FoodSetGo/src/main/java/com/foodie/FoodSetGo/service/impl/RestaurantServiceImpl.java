@@ -2,6 +2,7 @@ package com.foodie.FoodSetGo.service.impl;
 
 import com.foodie.FoodSetGo.dto.GetRestaurantsRequest;
 import com.foodie.FoodSetGo.dto.UpdateRestaurantRequest;
+import com.foodie.FoodSetGo.exception.NotFoundException;
 import com.foodie.FoodSetGo.model.Restaurant;
 import com.foodie.FoodSetGo.repository.RestaurantRepository;
 import com.foodie.FoodSetGo.service.RestaurantService;
@@ -37,7 +38,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant get(Integer id) {
-        return restaurantRepository.findById(id).get();
+        return restaurantRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant update(Integer id, UpdateRestaurantRequest updateRestaurantRequest) {
-        Restaurant restaurant = restaurantRepository.findById(id).get();
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(NotFoundException::new);
         restaurant.setName(updateRestaurantRequest.getName());
         restaurant.setAddress(updateRestaurantRequest.getAddress());
         restaurant.setEmail(updateRestaurantRequest.getEmail());

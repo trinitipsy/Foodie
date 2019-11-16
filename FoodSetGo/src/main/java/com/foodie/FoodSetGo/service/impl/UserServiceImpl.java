@@ -1,6 +1,7 @@
 package com.foodie.FoodSetGo.service.impl;
 
 import com.foodie.FoodSetGo.dto.UpdateUserRequest;
+import com.foodie.FoodSetGo.exception.NotFoundException;
 import com.foodie.FoodSetGo.model.User;
 import com.foodie.FoodSetGo.repository.UserRepository;
 import com.foodie.FoodSetGo.service.UserService;
@@ -25,31 +26,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Integer id) {
-        return userRepository.getOne(id);
+        return userRepository.findById(id).orElseThrow(NotFoundException::new);
     }
-
 
     @Override
     public void delete(Integer id) {
-        Optional<User> userForDelete = userRepository.findById(id);
-        if (!userForDelete.isPresent()) {
-            throw new EntityNotFoundException();
-        }
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+        userRepository.delete(user);
     }
 
     @Override
-    public User update(Integer id, UpdateUserRequest user) {
-        Optional<User> userForUpdate = userRepository.findById(id);
-        if (!userForUpdate.isPresent()) {
-            throw new EntityNotFoundException();
-        }
-        User user1 = userForUpdate.get();
-        user1.setName(user.getName());
-        user1.setSurname(user.getSurname());
-        user1.setAddress(user.getAddress());
-        System.out.println(user1.getId() + user1.getName() +user1.getSurname() + user1.getAddress());
-        return userRepository.save(user1);
+    public User update(Integer id, UpdateUserRequest userRequest) {
+        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+
+        user.setName(userRequest.getName());
+        user.setSurname(userRequest.getSurname());
+        user.setAddress(userRequest.getAddress());
+        System.out.println(user.getId() + user.getName() + user.getSurname() + user.getAddress());
+        return userRepository.save(user);
     }
 
     @Override

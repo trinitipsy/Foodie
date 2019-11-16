@@ -1,6 +1,7 @@
 package com.foodie.FoodSetGo.service.impl;
 
 import com.foodie.FoodSetGo.dto.UpdateFoodRequest;
+import com.foodie.FoodSetGo.exception.NotFoundException;
 import com.foodie.FoodSetGo.model.Food;
 import com.foodie.FoodSetGo.model.Restaurant;
 import com.foodie.FoodSetGo.repository.FoodRepository;
@@ -10,9 +11,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @Service
@@ -28,32 +27,31 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food get(Integer id) {
-        return foodRepository.findById(id).get();
+        return foodRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
     public Food update(Integer foodId, UpdateFoodRequest updateFoodRequest) {
-        Optional<Food> foodForUpdate = foodRepository.findById(foodId);
-        if(!foodForUpdate.isPresent()) {
-            throw new EntityNotFoundException();
-        }
-        foodForUpdate.get().setName(updateFoodRequest.getName());
-        foodForUpdate.get().setPrice(updateFoodRequest.getPrice());
-        foodForUpdate.get().setDescription(updateFoodRequest.getDescription());
-        return foodRepository.save(foodForUpdate.get());
+        Food foodForUpdate = foodRepository.findById(foodId).orElseThrow(NotFoundException::new);
+
+        foodForUpdate.setName(updateFoodRequest.getName());
+        foodForUpdate.setPrice(updateFoodRequest.getPrice());
+        foodForUpdate.setDescription(updateFoodRequest.getDescription());
+
+        return foodRepository.save(foodForUpdate);
     }
 
     @Override
     public void delete(Integer restaurantId, Integer foodId) {
-        Food food = foodRepository.findById(foodId).get();
-        if(food.getRestaurant().getId().equals(restaurantId)) {
-            foodRepository.deleteById(foodId);
-        }
+        Food food = foodRepository.findFirstByRestaurant_IdAndId(restaurantId, foodId)
+                .orElseThrow(NotFoundException::new);
+        foodRepository.delete(food);
     }
 
     @Override
     public Food save(UpdateFoodRequest updateFoodRequest) {
-        Restaurant restaurant = restaurantRepository.findById(updateFoodRequest.getRestaurantId()).get();
+        Restaurant restaurant = restaurantRepository.findById(updateFoodRequest.getRestaurantId())
+                .orElseThrow(NotFoundException::new);
         Food food = new Food();
         food.setName(updateFoodRequest.getName());
         food.setPrice(updateFoodRequest.getPrice());
