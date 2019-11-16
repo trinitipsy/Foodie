@@ -7,7 +7,7 @@ import com.foodie.FoodSetGo.repository.FoodRepository;
 import com.foodie.FoodSetGo.repository.RestaurantRepository;
 import com.foodie.FoodSetGo.service.FoodService;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @Data
 @Service
+@RequiredArgsConstructor
 public class FoodServiceImpl implements FoodService {
-    @Autowired
-    FoodRepository foodRepository;
-    @Autowired
-    RestaurantRepository restaurantRepository;
+    private final FoodRepository foodRepository;
+    private final RestaurantRepository restaurantRepository;
+
     @Override
     public List<Food> getAll() {
         return foodRepository.findAll();
@@ -32,8 +32,8 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Food update(Integer food_id, UpdateFoodRequest updateFoodRequest) {
-        Optional<Food> foodForUpdate = foodRepository.findById(food_id);
+    public Food update(Integer foodId, UpdateFoodRequest updateFoodRequest) {
+        Optional<Food> foodForUpdate = foodRepository.findById(foodId);
         if(!foodForUpdate.isPresent()) {
             throw new EntityNotFoundException();
         }
@@ -44,16 +44,16 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void delete(Integer restaurant_id, Integer food_id) {
-        Food food = foodRepository.findById(food_id).get();
-        if(food.getRestaurant().getId().equals(restaurant_id)) {
-            foodRepository.deleteById(food_id);
+    public void delete(Integer restaurantId, Integer foodId) {
+        Food food = foodRepository.findById(foodId).get();
+        if(food.getRestaurant().getId().equals(restaurantId)) {
+            foodRepository.deleteById(foodId);
         }
     }
 
     @Override
     public Food save(UpdateFoodRequest updateFoodRequest) {
-        Restaurant restaurant = restaurantRepository.findById(updateFoodRequest.getRestaurant_id()).get();
+        Restaurant restaurant = restaurantRepository.findById(updateFoodRequest.getRestaurantId()).get();
         Food food = new Food();
         food.setName(updateFoodRequest.getName());
         food.setPrice(updateFoodRequest.getPrice());

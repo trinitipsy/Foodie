@@ -5,7 +5,7 @@ import com.foodie.FoodSetGo.model.User;
 import com.foodie.FoodSetGo.repository.UserRepository;
 import com.foodie.FoodSetGo.service.UserService;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,9 +14,9 @@ import java.util.Optional;
 
 @Data
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<User> getAll() {
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Integer id) {
-        return userRepository.findById(id).get();
+        return userRepository.getOne(id);
     }
 
 

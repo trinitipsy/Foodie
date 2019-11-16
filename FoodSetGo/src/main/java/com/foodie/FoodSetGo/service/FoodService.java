@@ -8,7 +8,7 @@ import java.util.List;
 public interface FoodService {
     List<Food> getAll();
     Food get(Integer id);
-    Food update(Integer food_id, UpdateFoodRequest updateFoodRequest);
-    void delete(Integer restaurant_id, Integer food_id);
+    Food update(Integer foodId, UpdateFoodRequest updateFoodRequest);
+    void delete(Integer restaurantId, Integer foodId);
     Food save(UpdateFoodRequest updateFoodRequest);
 }

@@ -6,32 +6,33 @@ import com.foodie.FoodSetGo.model.Order;
 import com.foodie.FoodSetGo.repository.FoodRepository;
 import com.foodie.FoodSetGo.repository.OrderRepository;
 import com.foodie.FoodSetGo.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    FoodRepository foodRepository;
+    private final OrderRepository orderRepository;
+    private final FoodRepository foodRepository;
 
     @Override
     public Order save(CreateOrderRequest createOrderRequest) {
-        List<Food> food = foodRepository.findAllById(createOrderRequest.getId_food());
+        List<Integer> foodIds = createOrderRequest.getFoodIds();
+        List<Food> food = foodRepository.findAllById(foodIds);
 
         Order order = new Order();
         order.setFood(food);
-        Double totalPrice = food.stream().map((f) -> {
-                    int amount = Collections.frequency(createOrderRequest.getId_food(), f.getId());
-                    return f.getPrice() * amount;
-                }
-        ).reduce((double) 0,Double::sum);
+
+        ToDoubleFunction<Food> toPrice = (f) -> f.getPrice() * Collections.frequency(foodIds, f.getId());
+        Double totalPrice = food.stream().mapToDouble(toPrice).sum();
         order.setTotalPrice(totalPrice);
         order.setDeliveryAddress(createOrderRequest.getDeliveryAddress());
+
         return orderRepository.save(order);
     }
 }

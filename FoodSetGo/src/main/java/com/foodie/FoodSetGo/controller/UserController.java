@@ -1,38 +1,30 @@
 package com.foodie.FoodSetGo.controller;
 
+import com.foodie.FoodSetGo.constants.Cors;
 import com.foodie.FoodSetGo.dto.UpdateUserRequest;
 import com.foodie.FoodSetGo.model.User;
 import com.foodie.FoodSetGo.service.UserService;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Data
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = Cors.origins)
 public class UserController {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<User> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(userService.get(id));
     }

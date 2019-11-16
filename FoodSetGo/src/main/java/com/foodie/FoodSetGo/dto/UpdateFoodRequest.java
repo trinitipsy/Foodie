@@ -7,5 +7,5 @@ public class UpdateFoodRequest {
     private String name;
     private Double price;
     private String description;
-    private Integer restaurant_id;
+    private Integer restaurantId;
 }

@@ -1,25 +1,25 @@
 package com.foodie.FoodSetGo.controller;
 
+import com.foodie.FoodSetGo.constants.Cors;
 import com.foodie.FoodSetGo.dto.GetRestaurantsRequest;
 import com.foodie.FoodSetGo.dto.UpdateRestaurantRequest;
 import com.foodie.FoodSetGo.model.Restaurant;
 import com.foodie.FoodSetGo.service.RestaurantService;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Data
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/restaurants")
+@CrossOrigin(origins = Cors.origins)
 public class RestaurantController {
-    @Autowired
-    RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<List<GetRestaurantsRequest>> getAll() {
         List<GetRestaurantsRequest> list = restaurantService.getAll();
@@ -28,7 +28,6 @@ public class RestaurantController {
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Restaurant> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(restaurantService.get(id));
     }

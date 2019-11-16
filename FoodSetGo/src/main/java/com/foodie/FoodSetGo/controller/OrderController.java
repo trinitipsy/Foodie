@@ -1,19 +1,21 @@
 package com.foodie.FoodSetGo.controller;
 
+import com.foodie.FoodSetGo.constants.Cors;
 import com.foodie.FoodSetGo.dto.CreateOrderRequest;
 import com.foodie.FoodSetGo.model.Order;
 import com.foodie.FoodSetGo.service.OrderService;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Data
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin(origins = Cors.origins)
 public class OrderController {
-    @Autowired
-    OrderService orderService;
+    private final OrderService orderService;
 
     @PostMapping
     public ResponseEntity<Order> save(@RequestBody CreateOrderRequest createOrderRequest) {
