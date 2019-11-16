@@ -8,8 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class
-Food {
+public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,10 +19,9 @@ Food {
     @Column(nullable = false)
     private String description;
     @ManyToOne
-    @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
-    @ManyToMany(mappedBy = "food", cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Order> order;
 }
