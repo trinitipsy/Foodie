@@ -16,4 +16,8 @@ public class User {
     private String surname;
     @Column
     private String address;
+    @Column
+    private String email;
+    @Column
+    private String password;
 }

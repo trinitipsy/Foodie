@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService {
         user.setName(userRequest.getName());
         user.setSurname(userRequest.getSurname());
         user.setAddress(userRequest.getAddress());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
         System.out.println(user.getId() + user.getName() + user.getSurname() + user.getAddress());
         return userRepository.save(user);
     }
@@ -52,6 +54,8 @@ public class UserServiceImpl implements UserService {
         user.setName(updateUserRequest.getName());
         user.setSurname(updateUserRequest.getSurname());
         user.setAddress(updateUserRequest.getAddress());
+        user.setEmail(updateUserRequest.getEmail());
+        user.setPassword(updateUserRequest.getPassword());
         return userRepository.save(user);
     }
 }

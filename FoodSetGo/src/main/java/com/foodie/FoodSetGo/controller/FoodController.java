@@ -1,6 +1,7 @@
 package com.foodie.FoodSetGo.controller;
 
 import com.foodie.FoodSetGo.constants.Cors;
+import com.foodie.FoodSetGo.dto.SaveFoodRequest;
 import com.foodie.FoodSetGo.dto.UpdateFoodRequest;
 import com.foodie.FoodSetGo.model.Food;
 import com.foodie.FoodSetGo.service.FoodService;
@@ -33,12 +34,12 @@ public class FoodController {
     public ResponseEntity<Food> update(@PathVariable("id") Integer id, @RequestBody UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.update(id, updateFoodRequest));
     }
-    @PostMapping
-    public ResponseEntity<Food> save(@RequestBody UpdateFoodRequest updateFoodRequest) {
-        return ResponseEntity.ok(foodService.save(updateFoodRequest));
+    @PostMapping("{restaurantId}")
+    public ResponseEntity<Food> save(@PathVariable("restaurantId") Integer restaurantId, @RequestBody SaveFoodRequest saveFoodRequest) {
+        return ResponseEntity.ok(foodService.save(restaurantId, saveFoodRequest));
     }
-    @DeleteMapping("/{restaurantId}/{foodId}")
-    public void delete(@PathVariable Integer restaurantId, @PathVariable Integer foodId) {
-        foodService.delete(restaurantId, foodId);
+    @DeleteMapping("{foodId}")
+    public void delete(@PathVariable Integer foodId) {
+        foodService.delete(foodId);
     }
 }

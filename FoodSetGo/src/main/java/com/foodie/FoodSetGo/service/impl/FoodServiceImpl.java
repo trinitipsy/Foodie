@@ -1,5 +1,6 @@
 package com.foodie.FoodSetGo.service.impl;
 
+import com.foodie.FoodSetGo.dto.SaveFoodRequest;
 import com.foodie.FoodSetGo.dto.UpdateFoodRequest;
 import com.foodie.FoodSetGo.exception.NotFoundException;
 import com.foodie.FoodSetGo.model.Food;
@@ -42,20 +43,20 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void delete(Integer restaurantId, Integer foodId) {
-        Food food = foodRepository.findFirstByRestaurant_IdAndId(restaurantId, foodId)
+    public void delete( Integer foodId) {
+        Food food = foodRepository.findById(foodId)
                 .orElseThrow(NotFoundException::new);
         foodRepository.delete(food);
     }
 
     @Override
-    public Food save(UpdateFoodRequest updateFoodRequest) {
-        Restaurant restaurant = restaurantRepository.findById(updateFoodRequest.getRestaurantId())
+    public Food save(Integer restaurantId, SaveFoodRequest saveFoodRequest) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(NotFoundException::new);
         Food food = new Food();
-        food.setName(updateFoodRequest.getName());
-        food.setPrice(updateFoodRequest.getPrice());
-        food.setDescription(updateFoodRequest.getDescription());
+        food.setName(saveFoodRequest.getName());
+        food.setPrice(saveFoodRequest.getPrice());
+        food.setDescription(saveFoodRequest.getDescription());
         food.setRestaurant(restaurant);
         return foodRepository.save(food);
     }
