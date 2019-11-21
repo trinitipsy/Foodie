@@ -18,6 +18,8 @@ public class Food {
     private Double price;
     @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
+    private Boolean active;
     @ManyToOne
     @JsonIgnore
     private Restaurant restaurant;

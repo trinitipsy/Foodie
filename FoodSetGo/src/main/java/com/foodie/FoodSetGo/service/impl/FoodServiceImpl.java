@@ -23,12 +23,13 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public List<Food> getAll() {
-        return foodRepository.findAll();
+        return foodRepository.findAllByActiveTrue();
     }
 
     @Override
     public Food get(Integer id) {
-        return foodRepository.findById(id).orElseThrow(NotFoundException::new);
+        return foodRepository.findByActiveTrueAndId(id)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -46,7 +47,8 @@ public class FoodServiceImpl implements FoodService {
     public void delete( Integer foodId) {
         Food food = foodRepository.findById(foodId)
                 .orElseThrow(NotFoundException::new);
-        foodRepository.delete(food);
+        food.setActive(false);
+        foodRepository.save(food);
     }
 
     @Override
@@ -56,6 +58,7 @@ public class FoodServiceImpl implements FoodService {
         Food food = new Food();
         food.setName(saveFoodRequest.getName());
         food.setPrice(saveFoodRequest.getPrice());
+        food.setActive(true);
         food.setDescription(saveFoodRequest.getDescription());
         food.setRestaurant(restaurant);
         return foodRepository.save(food);
