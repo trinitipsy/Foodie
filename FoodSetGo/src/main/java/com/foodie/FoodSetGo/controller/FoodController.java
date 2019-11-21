@@ -34,11 +34,11 @@ public class FoodController {
     public ResponseEntity<Food> update(@PathVariable("id") Integer id, @RequestBody UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.update(id, updateFoodRequest));
     }
-    @PostMapping("{restaurantId}")
+    @PostMapping("/{restaurantId}")
     public ResponseEntity<Food> save(@PathVariable("restaurantId") Integer restaurantId, @RequestBody SaveFoodRequest saveFoodRequest) {
         return ResponseEntity.ok(foodService.save(restaurantId, saveFoodRequest));
     }
-    @DeleteMapping("{foodId}")
+    @DeleteMapping("/{foodId}")
     public void delete(@PathVariable Integer foodId) {
         foodService.delete(foodId);
     }
