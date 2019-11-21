@@ -23,7 +23,6 @@ public class Food {
     @ManyToOne
     @JsonIgnore
     private Restaurant restaurant;
-    @ManyToMany(cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Order> order;
 }

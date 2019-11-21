@@ -19,6 +19,8 @@ public class Restaurant {
     private String address;
     @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
+    private Boolean active;
     @OneToMany(mappedBy = "restaurant")
     private List<Food> menu;
 }

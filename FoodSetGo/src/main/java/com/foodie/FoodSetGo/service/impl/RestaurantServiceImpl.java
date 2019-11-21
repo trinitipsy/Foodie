@@ -21,7 +21,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<GetRestaurantsRequest> getAll() {
-        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<Restaurant> restaurants = restaurantRepository.findAllByActiveTrue();
         List<GetRestaurantsRequest> getRestaurantsRequests = new ArrayList<>();
         for (Restaurant r: restaurants
              ) {
@@ -44,7 +44,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void delete(Integer id) {
-        restaurantRepository.deleteById(id);
+        Restaurant restaurant = restaurantRepository.findById(id);
+        restaurant.setActive(false);
+        restaurantRepository.save(restaurant);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setEmail(updateRestaurantRequest.getEmail());
         restaurant.setAddress(updateRestaurantRequest.getAddress());
         restaurant.setDescription(updateRestaurantRequest.getDescription());
+        restaurant.setActive(true);
         return restaurantRepository.save(restaurant);
     }
 }
