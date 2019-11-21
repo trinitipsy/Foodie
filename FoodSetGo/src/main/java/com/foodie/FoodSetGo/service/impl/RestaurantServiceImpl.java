@@ -44,7 +44,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void delete(Integer id) {
-        Restaurant restaurant = restaurantRepository.findById(id);
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(NotFoundException::new);
         restaurant.setActive(false);
         restaurantRepository.save(restaurant);
     }
