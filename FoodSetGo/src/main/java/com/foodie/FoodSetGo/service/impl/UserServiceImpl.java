@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Integer id) {
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
-        userRepository.delete(user);
+        user.setActive(false);
+        userRepository.save(user);
     }
 
     @Override
@@ -44,7 +45,6 @@ public class UserServiceImpl implements UserService {
         user.setAddress(userRequest.getAddress());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
-        System.out.println(user.getId() + user.getName() + user.getSurname() + user.getAddress());
         return userRepository.save(user);
     }
 
@@ -56,6 +56,9 @@ public class UserServiceImpl implements UserService {
         user.setAddress(updateUserRequest.getAddress());
         user.setEmail(updateUserRequest.getEmail());
         user.setPassword(updateUserRequest.getPassword());
+        user.setActive(true);
         return userRepository.save(user);
     }
+
+
 }
