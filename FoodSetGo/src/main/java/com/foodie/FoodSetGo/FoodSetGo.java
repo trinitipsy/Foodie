@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FoodSetGo {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FoodSetGo.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FoodSetGo.class, args);
+    }
 
 }

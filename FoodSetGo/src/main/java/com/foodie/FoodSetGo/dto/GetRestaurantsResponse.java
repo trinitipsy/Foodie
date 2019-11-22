@@ -3,7 +3,7 @@ package com.foodie.FoodSetGo.dto;
 import lombok.Data;
 
 @Data
-public class GetRestaurantsRequest {
+public class GetRestaurantsResponse {
     private Integer id;
     private String name;
     private String email;

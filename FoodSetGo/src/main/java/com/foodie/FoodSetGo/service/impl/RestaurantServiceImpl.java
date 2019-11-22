@@ -1,6 +1,6 @@
 package com.foodie.FoodSetGo.service.impl;
 
-import com.foodie.FoodSetGo.dto.GetRestaurantsRequest;
+import com.foodie.FoodSetGo.dto.GetRestaurantsResponse;
 import com.foodie.FoodSetGo.dto.UpdateRestaurantRequest;
 import com.foodie.FoodSetGo.exception.NotFoundException;
 import com.foodie.FoodSetGo.model.Restaurant;
@@ -20,26 +20,28 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Override
-    public List<GetRestaurantsRequest> getAll() {
+    public List<GetRestaurantsResponse> getAll() {
         List<Restaurant> restaurants = restaurantRepository.findAllByActiveTrue();
-        List<GetRestaurantsRequest> getRestaurantsRequests = new ArrayList<>();
-        for (Restaurant r: restaurants
-             ) {
-            GetRestaurantsRequest req = new GetRestaurantsRequest();
+        List<GetRestaurantsResponse> getRestaurantsResponse = new ArrayList<>();
+        for (Restaurant r : restaurants
+        ) {
+            GetRestaurantsResponse req = new GetRestaurantsResponse();
             req.setId(r.getId());
             req.setName(r.getName());
             req.setAddress(r.getAddress());
             req.setEmail(r.getAddress());
             req.setDescription(r.getDescription());
-            getRestaurantsRequests.add(req);
+            getRestaurantsResponse.add(req);
         }
-        return getRestaurantsRequests;
+        return getRestaurantsResponse;
     }
 
     @Override
     public Restaurant get(Integer id) {
-        return restaurantRepository.findById(id)
+        Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
+        restaurant.getMenu().removeIf(f -> !f.getActive());
+        return restaurant;
     }
 
     @Override
