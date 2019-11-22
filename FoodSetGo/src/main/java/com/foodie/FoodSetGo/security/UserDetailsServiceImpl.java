@@ -1,17 +1,17 @@
 package com.foodie.FoodSetGo.security;
 
+import com.foodie.FoodSetGo.model.User;
 import com.foodie.FoodSetGo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -21,15 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User '" + email + "' not found");
         }
 
-        return org.springframework.security.core.userdetails.User//
-                .withUsername(email)//
-                .password(user.getPassword())//
-                .authorities(user.getRoles())//
-                .accountExpired(false)//
-                .accountLocked(false)//
-                .credentialsExpired(false)//
-                .disabled(false)//
+        return org.springframework.security.core.userdetails.User
+                .withUsername(email)
+                .password(user.getPassword())
+                .authorities(user.getRole().getCode())
                 .build();
-    }
     }
 }
