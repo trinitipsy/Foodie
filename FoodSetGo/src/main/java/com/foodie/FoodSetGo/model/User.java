@@ -1,5 +1,6 @@
 package com.foodie.FoodSetGo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,4 +23,7 @@ public class User {
     private String password;
     @Column(nullable = false)
     private Boolean active;
+    @Column
+    @ManyToOne
+    private Role role;
 }
