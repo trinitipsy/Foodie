@@ -1,6 +1,7 @@
 package com.foodie.FoodSetGo.controller;
 
 import com.foodie.FoodSetGo.constants.Cors;
+import com.foodie.FoodSetGo.dto.LoginRequest;
 import com.foodie.FoodSetGo.dto.UpdateUserRequest;
 import com.foodie.FoodSetGo.model.User;
 import com.foodie.FoodSetGo.service.UserService;
@@ -9,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
@@ -44,4 +47,13 @@ public class UserController {
         return ResponseEntity.ok(userService.save(user));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> logIn(@RequestBody LoginRequest loginRequest) {
+        String token = userService.logIn(loginRequest.getUsername(), loginRequest.getPassword());
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return ResponseEntity.ok(response);
+    }
+
 }
+

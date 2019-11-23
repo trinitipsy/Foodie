@@ -11,4 +11,5 @@ public interface UserService {
     void delete(Integer id);
     User update(Integer id, UpdateUserRequest user);
     User save(UpdateUserRequest user);
+    String logIn(String username, String password);
 }
