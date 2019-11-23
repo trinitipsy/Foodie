@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -22,7 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //USER PATHS
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll() //DODATI ENDPOINT
-
 
                 .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/users/**").hasRole("USER")

@@ -23,7 +23,6 @@ public class User {
     private String password;
     @Column(nullable = false)
     private Boolean active;
-    @Column
     @ManyToOne
     private Role role;
 }

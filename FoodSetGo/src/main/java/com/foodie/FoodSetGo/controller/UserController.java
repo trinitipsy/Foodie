@@ -43,4 +43,5 @@ public class UserController {
     public ResponseEntity<User> save(@RequestBody UpdateUserRequest user) {
         return ResponseEntity.ok(userService.save(user));
     }
+
 }
