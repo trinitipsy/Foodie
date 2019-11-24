@@ -8,6 +8,7 @@ import com.foodie.FoodSetGo.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,18 +33,19 @@ public class UserController {
         return ResponseEntity.ok(userService.get(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable("id") Integer id, @RequestBody UpdateUserRequest user) {
-        return ResponseEntity.ok(userService.update(id, user));
+    @PutMapping
+    public ResponseEntity<User> update(Authentication authentication, @RequestBody UpdateUserRequest user) {
+        return ResponseEntity.ok(userService.update(authentication.getName(), user));
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        userService.delete(id);
+    @DeleteMapping
+    public void delete(Authentication authentication) {
+
+        userService.delete(authentication.getName());
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody UpdateUserRequest user) {
+    public ResponseEntity<?> save(@RequestBody UpdateUserRequest user) {
         return ResponseEntity.ok(userService.save(user));
     }
 

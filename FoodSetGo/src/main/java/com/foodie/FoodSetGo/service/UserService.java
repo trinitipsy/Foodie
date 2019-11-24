@@ -8,8 +8,8 @@ import java.util.List;
 public interface UserService {
     List<User> getAll();
     User get(Integer id);
-    void delete(Integer id);
-    User update(Integer id, UpdateUserRequest user);
-    User save(UpdateUserRequest user);
+    void delete(String username);
+    User update(String email, UpdateUserRequest user);
+    String save(UpdateUserRequest user);
     String logIn(String username, String password);
 }

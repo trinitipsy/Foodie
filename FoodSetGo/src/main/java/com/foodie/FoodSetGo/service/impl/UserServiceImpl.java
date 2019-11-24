@@ -2,7 +2,9 @@ package com.foodie.FoodSetGo.service.impl;
 
 import com.foodie.FoodSetGo.dto.UpdateUserRequest;
 import com.foodie.FoodSetGo.exception.NotFoundException;
+import com.foodie.FoodSetGo.model.Role;
 import com.foodie.FoodSetGo.model.User;
+import com.foodie.FoodSetGo.repository.RoleRepository;
 import com.foodie.FoodSetGo.repository.UserRepository;
 import com.foodie.FoodSetGo.security.JwtTokenProvider;
 import com.foodie.FoodSetGo.service.UserService;
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
+    private final RoleRepository roleRepository;
 
     @Override
     public List<User> getAll() {
@@ -33,15 +36,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+    public void delete(String username) {
+        User user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
         user.setActive(false);
         userRepository.save(user);
     }
 
     @Override
-    public User update(Integer id, UpdateUserRequest userRequest) {
-        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+    public User update(String email, UpdateUserRequest userRequest) {
+        User user = userRepository.findByEmail(email).orElseThrow(NotFoundException::new);
 
         user.setName(userRequest.getName());
         user.setSurname(userRequest.getSurname());
@@ -52,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UpdateUserRequest updateUserRequest) {
+    public String save(UpdateUserRequest updateUserRequest) {
         User user = new User();
         user.setName(updateUserRequest.getName());
         user.setSurname(updateUserRequest.getSurname());
@@ -60,12 +63,15 @@ public class UserServiceImpl implements UserService {
         user.setEmail(updateUserRequest.getEmail());
         user.setPassword(updateUserRequest.getPassword());
         user.setActive(true);
-        return userRepository.save(user);
+        Role role = roleRepository.findByCode("ROLE_USER").get();
+        user.setRole(role);
+        userRepository.save(user);
+        return logIn(user.getEmail(), user.getPassword());
     }
 
     @Override
     public String logIn(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        return jwtTokenProvider.createToken(username, userRepository.findByEmail(username).getRole());
+        return jwtTokenProvider.createToken(username, userRepository.findByEmail(username).get().getRole());
     }
 }
