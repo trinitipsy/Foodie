@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
     private final FoodRepository foodRepository;
 
     @Override
-    public Order save(CreateOrderRequest createOrderRequest) {
+    public Order save(String address, CreateOrderRequest createOrderRequest) {
         List<Integer> foodIds = createOrderRequest.getFoodIds();
         List<Food> food = foodRepository.findAllById(foodIds);
 
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
         ToDoubleFunction<Food> toPrice = (f) -> f.getPrice() * Collections.frequency(foodIds, f.getId());
         Double totalPrice = food.stream().mapToDouble(toPrice).sum();
         order.setTotalPrice(totalPrice);
-        order.setDeliveryAddress(createOrderRequest.getDeliveryAddress());
+        order.setDeliveryAddress(address);
 
         return orderRepository.save(order);
     }
