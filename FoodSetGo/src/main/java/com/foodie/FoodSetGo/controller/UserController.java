@@ -46,7 +46,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody UpdateUserRequest user) {
-        return ResponseEntity.ok(userService.save(user));
+        String token = userService.save(user);
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
