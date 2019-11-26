@@ -23,7 +23,6 @@ public class OrderServiceImpl implements OrderService {
     public Order save(String address, CreateOrderRequest createOrderRequest) {
         List<Integer> foodIds = createOrderRequest.getFoodIds();
         List<Food> food = foodRepository.findAllById(foodIds);
-
         Order order = new Order();
         order.setFood(food);
 

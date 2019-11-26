@@ -2,6 +2,7 @@ package com.foodie.FoodSetGo.controller;
 
 import com.foodie.FoodSetGo.constants.Cors;
 import com.foodie.FoodSetGo.dto.LoginRequest;
+import com.foodie.FoodSetGo.dto.TokenResponse;
 import com.foodie.FoodSetGo.dto.UpdateUserRequest;
 import com.foodie.FoodSetGo.model.User;
 import com.foodie.FoodSetGo.service.UserService;
@@ -40,24 +41,23 @@ public class UserController {
 
     @DeleteMapping
     public void delete(Authentication authentication) {
-
         userService.delete(authentication.getName());
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody UpdateUserRequest user) {
         String token = userService.save(user);
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        return ResponseEntity.ok(response);
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setToken(token);
+        return ResponseEntity.ok(tokenResponse);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> logIn(@RequestBody LoginRequest loginRequest) {
         String token = userService.logIn(loginRequest.getUsername(), loginRequest.getPassword());
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        return ResponseEntity.ok(response);
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setToken(token);
+        return ResponseEntity.ok(tokenResponse);
     }
 
 }
