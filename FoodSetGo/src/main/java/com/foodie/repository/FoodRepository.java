@@ -12,5 +12,4 @@ public interface FoodRepository extends JpaRepository<Food, Integer> {
     List<Food> findAllByActiveTrue();
 
     Optional<Food> findByActiveTrueAndId(Integer id);
-
 }

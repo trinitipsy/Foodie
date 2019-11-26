@@ -1,7 +1,7 @@
 package com.foodie.service.impl;
 
-import com.foodie.dto.RestaurantListResponse;
 import com.foodie.dto.AddRestaurantRequest;
+import com.foodie.dto.RestaurantListResponse;
 import com.foodie.exception.NotFoundException;
 import com.foodie.model.Restaurant;
 import com.foodie.repository.RestaurantRepository;
@@ -10,8 +10,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Service
@@ -22,21 +22,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<RestaurantListResponse> getAll() {
         final List<Restaurant> restaurants = restaurantRepository.findAllByActiveTrue();
-        final List<RestaurantListResponse> restaurantListResponse = new ArrayList<>();
-
-        restaurants.stream().map(r -> )
-
-        //TODO Java 8+
-        for (Restaurant r : restaurants) {
-            RestaurantListResponse req = new RestaurantListResponse();
-            req.setId(r.getId());
-            req.setName(r.getName());
-            req.setAddress(r.getAddress());
-            req.setEmail(r.getAddress());
-            req.setDescription(r.getDescription());
-            restaurantListResponse.add(req);
-        }
-        return restaurantListResponse;
+        return restaurants.stream().map(RestaurantListResponse::new).collect(Collectors.toList());
     }
 
     @Override

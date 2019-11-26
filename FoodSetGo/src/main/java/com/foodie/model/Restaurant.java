@@ -1,6 +1,7 @@
 package com.foodie.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +22,8 @@ public class Restaurant {
     private String description;
     @Column(nullable = false)
     private Boolean active;
-    // TODO napraviti getter da dovlaci samo aktivnu hranu
     @OneToMany(mappedBy = "restaurant")
+    @Where(clause = "active = true")
     private List<Food> menu;
+
 }
