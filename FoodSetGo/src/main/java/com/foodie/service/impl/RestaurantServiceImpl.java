@@ -27,37 +27,22 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant get(Integer id) {
-        Restaurant restaurant = null;
-        try {
-            restaurant = restaurantRepository.findById(id)
+        Restaurant restaurant = restaurantRepository.findById(id)
                     .orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
         restaurant.getMenu().removeIf(f -> !f.getActive());
         return restaurant;
     }
 
     @Override
     public Restaurant delete(Integer id) {
-        Restaurant restaurant = null;
-        try {
-            restaurant = restaurantRepository.findById(id).orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(NotFoundException::new);
         restaurant.setActive(false);
         return restaurantRepository.save(restaurant);
     }
 
     @Override
     public Restaurant update(Integer id, AddRestaurantRequest addRestaurantRequest) {
-        Restaurant restaurant = null;
-        try {
-            restaurant = restaurantRepository.findById(id).orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(NotFoundException::new);
         restaurant.setName(addRestaurantRequest.getName());
         restaurant.setAddress(addRestaurantRequest.getAddress());
         restaurant.setEmail(addRestaurantRequest.getEmail());

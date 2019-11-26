@@ -28,53 +28,31 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food get(Integer id) {
-        try {
-            return foodRepository.findByActiveTrueAndId(id)
-                    .orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return foodRepository.findByActiveTrueAndId(id)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
     public Food update(Integer foodId, UpdateFoodRequest updateFoodRequest) {
-        Food foodForUpdate = null;
-        try {
-            foodForUpdate = foodRepository.findById(foodId).orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-
+        Food foodForUpdate = foodRepository.findById(foodId).orElseThrow(NotFoundException::new);
         foodForUpdate.setName(updateFoodRequest.getName());
         foodForUpdate.setPrice(updateFoodRequest.getPrice());
         foodForUpdate.setDescription(updateFoodRequest.getDescription());
-
         return foodRepository.save(foodForUpdate);
     }
 
     @Override
     public Food delete(Integer foodId) {
-        Food food = null;
-        try {
-            food = foodRepository.findById(foodId)
-                    .orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
+        Food food = foodRepository.findById(foodId)
+                .orElseThrow(NotFoundException::new);
         food.setActive(false);
         return foodRepository.save(food);
     }
 
     @Override
     public Food add(Integer restaurantId, SaveFoodRequest saveFoodRequest) {
-        Restaurant restaurant = null;
-        try {
-            restaurant = restaurantRepository.findById(restaurantId)
-                    .orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(NotFoundException::new);
         Food food = new Food();
         food.setName(saveFoodRequest.getName());
         food.setPrice(saveFoodRequest.getPrice());

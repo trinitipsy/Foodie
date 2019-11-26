@@ -32,35 +32,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(String username) {
-        try {
-            return userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
     }
 
     @Override
     public User delete(String username) {
-        User user = null;
-        try {
-            user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
+        User user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
         user.setActive(false);
         return userRepository.save(user);
     }
 
     @Override
     public User update(String username, UpdateUserRequest userRequest) {
-        User user = null;
-        try {
-            user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-
+        User user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
         user.setName(userRequest.getName());
         user.setSurname(userRequest.getSurname());
         user.setAddress(userRequest.getAddress());
