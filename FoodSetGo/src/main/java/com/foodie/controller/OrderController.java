@@ -21,7 +21,7 @@ public class OrderController {
     private final UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<Order> save(Authentication authentication, @RequestBody CreateOrderRequest createOrderRequest) {
+    public ResponseEntity<Order> save(Authentication authentication, @RequestBody final CreateOrderRequest createOrderRequest) {
         String email = authentication.getName();
         String address = userRepository.findByEmail(email).get().getAddress();
         return ResponseEntity.ok(orderService.add(address, createOrderRequest));

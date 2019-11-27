@@ -26,19 +26,19 @@ public class FoodController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Food> get(@PathVariable("id") Integer id) {
+    public ResponseEntity<Food> get(@PathVariable("id") final Integer id) {
         return ResponseEntity.ok(foodService.get(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Food> update(@PathVariable("id") Integer id, @RequestBody UpdateFoodRequest updateFoodRequest) {
+    public ResponseEntity<Food> update(@PathVariable("id") final Integer id, @RequestBody final UpdateFoodRequest updateFoodRequest) {
         return ResponseEntity.ok(foodService.update(id, updateFoodRequest));
     }
     @PostMapping("/{restaurantId}")
-    public ResponseEntity<Food> save(@PathVariable("restaurantId") Integer restaurantId, @RequestBody SaveFoodRequest saveFoodRequest) {
+    public ResponseEntity<Food> save(@PathVariable("restaurantId") final Integer restaurantId, @RequestBody final SaveFoodRequest saveFoodRequest) {
         return ResponseEntity.ok(foodService.add(restaurantId, saveFoodRequest));
     }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) { foodService.delete(id);
+    public void delete(@PathVariable final Integer id) { foodService.delete(id);
     }
 }

@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<User> update(Authentication authentication, @RequestBody UpdateUserRequest user) {
+    public ResponseEntity<User> update(Authentication authentication, @RequestBody final UpdateUserRequest user) {
         return ResponseEntity.ok(userService.update(authentication.getName(), user));
     }
 
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid UpdateUserRequest user) {
+    public ResponseEntity<?> save(@RequestBody @Valid final UpdateUserRequest user) {
         String token = userService.add(user);
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setToken(token);
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> logIn(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> logIn(@RequestBody final LoginRequest loginRequest) {
         String token = userService.logIn(loginRequest.getUsername(), loginRequest.getPassword());
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setToken(token);

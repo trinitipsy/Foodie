@@ -21,7 +21,7 @@ public class UserMessageController {
     private final UserMessageService userMessageService;
 
     @PostMapping
-    public ResponseEntity<UserMessage> add(@RequestBody UserMessage userMessage) {
+    public ResponseEntity<UserMessage> add(@RequestBody final UserMessage userMessage) {
         return ResponseEntity.ok(userMessageService.add(userMessage));
     }
 }

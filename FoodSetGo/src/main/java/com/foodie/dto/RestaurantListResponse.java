@@ -11,7 +11,7 @@ public class RestaurantListResponse {
     private String address;
     private String description;
 
-    public RestaurantListResponse(Restaurant restaurant) {
+    public RestaurantListResponse(final Restaurant restaurant) {
         this.id = restaurant.getId();
         this.name = restaurant.getName();
         this.email = restaurant.getEmail();
