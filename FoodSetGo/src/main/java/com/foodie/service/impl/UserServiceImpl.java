@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAll() {
@@ -60,16 +62,18 @@ public class UserServiceImpl implements UserService {
         user.setSurname(updateUserRequest.getSurname());
         user.setAddress(updateUserRequest.getAddress());
         user.setEmail(updateUserRequest.getEmail());
-        user.setPassword(updateUserRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
         user.setActive(true);
         Role role = roleRepository.findByCode("ROLE_USER").get();
         user.setRole(role);
         userRepository.save(user);
-        return logIn(user.getEmail(), user.getPassword());
+        return logIn(user.getEmail(), updateUserRequest.getPassword());
     }
 
     @Override
     public String logIn(String username, String password) {
+
+
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         return jwtTokenProvider.createToken(username, userRepository.findByEmail(username).get().getRole());
     }
