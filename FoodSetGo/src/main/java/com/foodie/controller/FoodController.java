@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
@@ -28,6 +29,10 @@ public class FoodController {
     @GetMapping("/{id}")
     public ResponseEntity<Food> get(@PathVariable("id") final Integer id) {
         return ResponseEntity.ok(foodService.get(id));
+    }
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> count() {
+        return ResponseEntity.ok(foodService.count());
     }
 
     @PutMapping("/{id}")

@@ -12,7 +12,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Service
@@ -30,6 +32,13 @@ public class FoodServiceImpl implements FoodService {
     public Food get(Integer id) {
         return foodRepository.findByActiveTrueAndId(id)
                 .orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public Map<String, Integer> count() {
+        Map<String, Integer> count = new HashMap<>();
+        count.put("count", foodRepository.countFoodByActiveTrue());
+        return count;
     }
 
     @Override
