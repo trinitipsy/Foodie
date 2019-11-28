@@ -32,13 +32,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //USER PATHS
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").not().authenticated()
-                .antMatchers(HttpMethod.POST, "/users/login").not().authenticated() //DODATI ENDPOINT
+                .antMatchers(HttpMethod.POST, "/users/login").not().authenticated()
 
                 .antMatchers(HttpMethod.DELETE, "/users/**").authenticated()
                 .antMatchers(HttpMethod.PUT, "/users/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/orders").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/restaurants").authenticated()
-                .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/users/**").authenticated()
 
                 .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")

@@ -15,7 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Service
@@ -38,6 +40,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, Integer> count() {
+        Map<String, Integer> count = new HashMap<>();
+        count.put("count", userRepository.countUsersByActiveTrue());
+        return count;
+    }
+
+    @Override
     public User delete(String username) {
         User user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
         user.setActive(false);
@@ -45,14 +54,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(String username, UpdateUserRequest userRequest) {
+    public String update(String username, UpdateUserRequest userRequest) {
         User user = userRepository.findByEmail(username).orElseThrow(NotFoundException::new);
         user.setName(userRequest.getName());
         user.setSurname(userRequest.getSurname());
         user.setAddress(userRequest.getAddress());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
-        return userRepository.save(user);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        userRepository.save(user);
+        return logIn(user.getEmail(), userRequest.getPassword());
     }
 
     @Override

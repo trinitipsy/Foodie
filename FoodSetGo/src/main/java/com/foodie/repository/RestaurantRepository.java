@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     List<Restaurant> findAllByActiveTrue();
+    Integer countRestaurantsByActiveTrue();
 }

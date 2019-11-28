@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
@@ -33,8 +34,13 @@ public class UserController {
         return ResponseEntity.ok(userService.get(authentication.getName()));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> count() {
+        return ResponseEntity.ok(userService.count());
+    }
+
     @PutMapping
-    public ResponseEntity<User> update(Authentication authentication, @RequestBody final UpdateUserRequest user) {
+    public ResponseEntity<?> update(Authentication authentication, @RequestBody final UpdateUserRequest user) {
         return ResponseEntity.ok(userService.update(authentication.getName(), user));
     }
 

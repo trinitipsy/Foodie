@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RequiredArgsConstructor
@@ -36,6 +37,10 @@ public class RestaurantController {
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(restaurantService.get(id));
+    }
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Integer>> count() {
+        return ResponseEntity.ok(restaurantService.count());
     }
 
     @PostMapping
