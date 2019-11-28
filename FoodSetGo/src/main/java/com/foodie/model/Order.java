@@ -12,12 +12,12 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToMany(mappedBy = "order")
+    @Column(nullable = false)
+    private Double totalPrice;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonIgnore
     @Column(nullable = false)
     private List<OrderItem> orderItem;
-    @Column(nullable = false)
-    private Double totalPrice;
     @Column(nullable = false)
     private String deliveryAddress;
 

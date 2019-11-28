@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.List;
 
 @Data
 @Entity
@@ -19,10 +18,19 @@ public class OrderItem {
     private Integer id;
     @Column
     private Integer amount;
+    @Column
+    private Double price;
     @ManyToOne
     @JsonIgnore
-    private List<Food> food;
+    private Food food;
     @ManyToOne
     @JsonIgnore
-    private List<Order> order;
+    private Order order;
+
+    public OrderItem(final Food food, final Integer amount, final Order order, final Double price) {
+        this.amount = amount;
+        this.food = food;
+        this.order = order;
+        this.price = price;
+    }
 }
