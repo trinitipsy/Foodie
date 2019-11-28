@@ -23,7 +23,7 @@ public class Food {
     @ManyToOne
     @JsonIgnore
     private Restaurant restaurant;
-    @ManyToMany(mappedBy = "food")
+    @OneToMany(mappedBy = "food")
     @JsonIgnore
-    private List<Order> order;
+    private List<OrderItem> orderItem;
 }

@@ -12,15 +12,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToMany
-    @JoinTable(
-            name = "order_food",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id"
-            ))
+    @OneToMany(mappedBy = "order")
     @JsonIgnore
     @Column(nullable = false)
-    private List<Food> food;
+    private List<OrderItem> orderItem;
     @Column(nullable = false)
     private Double totalPrice;
     @Column(nullable = false)
