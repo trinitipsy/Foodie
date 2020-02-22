@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@Data
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/restaurants")
